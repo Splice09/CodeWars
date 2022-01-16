@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Patrick\\workspace\\Codewars\\CodeWars\\CodeWars\\CodeWars.csproj": {}
+    "C:\\Users\\Patrick\\workspace\\CodeWars\\CodeWars\\CodeWars.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Patrick\\workspace\\Codewars\\CodeWars\\CodeWars\\CodeWars.csproj": {
+    "C:\\Users\\Patrick\\workspace\\CodeWars\\CodeWars\\CodeWars.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Patrick\\workspace\\Codewars\\CodeWars\\CodeWars\\CodeWars.csproj",
+        "projectUniqueName": "C:\\Users\\Patrick\\workspace\\CodeWars\\CodeWars\\CodeWars.csproj",
         "projectName": "CodeWars",
-        "projectPath": "C:\\Users\\Patrick\\workspace\\Codewars\\CodeWars\\CodeWars\\CodeWars.csproj",
+        "projectPath": "C:\\Users\\Patrick\\workspace\\CodeWars\\CodeWars\\CodeWars.csproj",
         "packagesPath": "C:\\Users\\Patrick\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Patrick\\workspace\\Codewars\\CodeWars\\CodeWars\\obj\\",
+        "outputPath": "C:\\Users\\Patrick\\workspace\\CodeWars\\CodeWars\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
