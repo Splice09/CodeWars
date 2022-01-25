@@ -12,7 +12,7 @@ namespace CodeWars
             var clues1 = new[]{ 2, 2, 1, 3,
                                 2, 2, 3, 1,
                                 1, 2, 2, 3,
-                                3, 2, 1, 3};
+                                3, 4, 1, 3};
 
             var clues2 = new[]{ 0, 0, 1, 2,
                                 0, 2, 0, 0,
@@ -30,13 +30,16 @@ namespace CodeWars
             int gridSize = (int)Math.Sqrt(clues.Length);
             
             // separate clues
-            var topClues = clues.Take(gridSize);
-            var rightClues = clues.Skip(gridSize).Take(gridSize);
-            var bottomClues = clues.Skip(gridSize * 2).Take(gridSize);
-            var leftClues = clues.Skip(gridSize * 3).Take(gridSize);
+            var topClues = clues.Take(gridSize).ToArray();
+            var rightClues = clues.Skip(gridSize).Take(gridSize).ToArray();
+            var bottomClues = clues.Skip(gridSize * 2).Take(gridSize).Reverse().ToArray();
+            var leftClues = clues.Skip(gridSize * 3).Take(gridSize).Reverse().ToArray();
             PrintClues(topClues, rightClues, bottomClues, leftClues);
 
             Building[,] grid = CreateGrid(gridSize);
+            PrintGrid(grid);
+
+            grid = InitializeEdgeClues(grid, topClues, rightClues, bottomClues, leftClues);
             PrintGrid(grid);
             return null;
         }
@@ -66,27 +69,91 @@ namespace CodeWars
             return grid;
         }
 
-        private static Building[,] InitializeEdgeClues(Building[,] grid, IEnumerable<int> topClues, IEnumerable<int> rightClues, IEnumerable<int> bottomClues, IEnumerable<int> leftClues)
+        private static Building[,] InitializeEdgeClues(Building[,] grid, int[] topClues, int[] rightClues, int[] bottomClues, int[] leftClues)
         {
-            // set up buildings based on clues
-            foreach (var clue in topClues)
+            int gridSize = topClues.Length;
+            for (int i = 0; i < gridSize; i++)
             {
-                // TODO: set buildings
+                if(topClues[i] == 1)
+                {
+                    grid[0, i].height = gridSize;
+                    grid[0, i].possibleHeights.Clear();
+                }
+                else if(topClues[i] == gridSize - 1)
+                {
+
+                }
+                else if (topClues[i] == gridSize)
+                {
+                    for (int j = 0; j < gridSize; j++)
+                    {
+                        grid[j, i].height = j + 1;
+                        grid[j, i].possibleHeights.Clear();
+                    }
+                }
             }
 
-            foreach (var clue in rightClues)
+            for (int i = 0; i < gridSize; i++)
             {
-                // TODO: set buildings
+                if (rightClues[i] == 1)
+                {
+                    grid[i, gridSize - 1].height = gridSize;
+                    grid[i, gridSize - 1].possibleHeights.Clear();
+                }
+                else if (rightClues[i] == gridSize - 1)
+                {
+
+                }
+                else if (rightClues[i] == gridSize)
+                {
+                    for (int j = 0; j < gridSize; j++)
+                    {
+                        grid[i, j].height = gridSize - j;
+                        grid[i, j].possibleHeights.Clear();
+                    }
+                }
             }
 
-            foreach (var clue in bottomClues)
+            for (int i = 0; i < gridSize; i++)
             {
-                // TODO: set buildings
+                if (bottomClues[i] == 1)
+                {
+                    grid[gridSize - 1, i].height = gridSize;
+                    grid[gridSize - 1, i].possibleHeights.Clear();
+                }
+                else if (bottomClues[i] == gridSize - 1)
+                {
+
+                }
+                else if (bottomClues[i] == gridSize)
+                {
+                    for (int j = 0; j < gridSize; j++)
+                    {
+                        grid[j, i].height = gridSize - j;
+                        grid[j, i].possibleHeights.Clear();
+                    }
+                }
             }
 
-            foreach (var clue in leftClues)
+            for (int i = 0; i < gridSize; i++)
             {
-                // TODO: set buildings
+                if (leftClues[i] == 1)
+                {
+                    grid[i, 0].height = gridSize;
+                    grid[i, 0].possibleHeights.Clear();
+                }
+                else if (leftClues[i] == gridSize - 1)
+                {
+
+                }
+                else if (leftClues[i] == gridSize)
+                {
+                    for (int j = 0; j < gridSize; j++)
+                    {
+                        grid[i, j].height = j + 1;
+                        grid[i, j].possibleHeights.Clear();
+                    }
+                }
             }
             return grid;
         }
