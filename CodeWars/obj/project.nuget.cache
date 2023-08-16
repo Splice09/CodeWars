@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "Xqav7wtGSF5mp2NNffkWntnlS1t2g1IviyBAJS7v7X2VJh1evdQZTW+B5d1yl2k+7bJKpPJy/FM2R8EJTtnr0A==",
+  "dgSpecHash": "/u0vFPZ01o5fej8upyxuPaQiWNCHxjnX1wE+n4ESC+KlxV1ivCbOfO1xxqQCmHDitGHPpg4MNkosDXkq4Fckvg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Patrick\\workspace\\CodeWars\\CodeWars\\CodeWars.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\workspace\\CodeWars\\CodeWars\\CodeWars.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Splice\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\Splice\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\Splice\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512",
+    "C:\\Users\\Splice\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.32\\microsoft.netcore.app.host.win-x64.3.1.32.nupkg.sha512"
+  ],
   "logs": []
 }
