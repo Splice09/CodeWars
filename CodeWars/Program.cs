@@ -43,8 +43,8 @@ namespace CodeWars
             grid = InitializeEdgeClues(grid, topClues, rightClues, bottomClues, leftClues);
             PrintGrid(grid);
 
-            var isPossible = Possible(grid, 2, 2, 4);
-            Console.WriteLine($"Is Possible Check for input 2, 2, 4: {isPossible}");
+            //var isPossible = Possible(grid, 2, 2, 4);
+            //Console.WriteLine($"Is Possible Check for input 2, 2, 4: {isPossible}");
             return null;
         }
 
@@ -82,7 +82,7 @@ namespace CodeWars
                 {
                     //set first index of row to gridSize
                     grid[0, i].height = gridSize;
-                    grid[0, i].possibleHeights.Remove(gridSize);
+                    grid[0, i].possibleHeights.Clear();
                 }
                 else if (topClues[i] == gridSize - 1)
                 {
@@ -94,7 +94,7 @@ namespace CodeWars
                     for (int j = 0; j < gridSize; j++)
                     {
                         grid[j, i].height = j + 1;
-                        grid[j, i].possibleHeights.Remove(j+1);
+                        grid[j, i].possibleHeights.Clear();
                     }
                 }
             }
@@ -105,7 +105,7 @@ namespace CodeWars
                 {
                     //set first index of row to gridSize
                     grid[i, gridSize - 1].height = gridSize;
-                    grid[i, gridSize - 1].possibleHeights.Remove(gridSize);
+                    grid[i, gridSize - 1].possibleHeights.Clear();
                 }
                 else if (rightClues[i] == gridSize - 1)
                 {
@@ -117,7 +117,7 @@ namespace CodeWars
                     for (int j = 0; j < gridSize; j++)
                     {
                         grid[i, j].height = gridSize - j;
-                        grid[i, j].possibleHeights.Remove(gridSize - j);
+                        grid[i, j].possibleHeights.Clear();
                     }
                 }
             }
@@ -128,7 +128,7 @@ namespace CodeWars
                 {
                     //set first index of row to gridSize
                     grid[gridSize - 1, i].height = gridSize;
-                    grid[gridSize - 1, i].possibleHeights.Remove(gridSize);
+                    grid[gridSize - 1, i].possibleHeights.Clear();
                 }
                 else if (bottomClues[i] == gridSize - 1)
                 {
@@ -140,7 +140,7 @@ namespace CodeWars
                     for (int j = 0; j < gridSize; j++)
                     {
                         grid[j, i].height = gridSize - j;
-                        grid[j, i].possibleHeights.Remove(gridSize - j);
+                        grid[j, i].possibleHeights.Clear();
                     }
                 }
             }
@@ -151,7 +151,7 @@ namespace CodeWars
                 {
                     //set first index of row to gridSize
                     grid[i, 0].height = gridSize;
-                    grid[i, 0].possibleHeights.Remove(gridSize);
+                    grid[i, 0].possibleHeights.Clear();
                 }
                 else if (leftClues[i] == gridSize - 1)
                 {
@@ -163,16 +163,17 @@ namespace CodeWars
                     for (int j = 0; j < gridSize; j++)
                     {
                         grid[i, j].height = j + 1;
-                        grid[i, j].possibleHeights.Remove(j + 1);
+                        grid[i, j].possibleHeights.Clear();
                     }
                 }
             }
             return grid;
         }
 
-        public static bool Possible(Building[,] grid, int row, int column, int height)
+        public static bool Possible(Building[,] grid, int[] topClues, int[] rightClues, int[] bottomClues, int[] leftClues, int row, int column, int height)
         {
             int gridSize = grid.GetLength(0);
+            //sudoku scanning
             for (int i = 0; i < gridSize; i++)
             {
                 if (grid[row, i].height == height)
@@ -187,7 +188,7 @@ namespace CodeWars
                     return false;
                 }
             }
-            
+            //check if placement violates edge rules
             
             return true;
         }
