@@ -189,7 +189,30 @@ namespace CodeWars
                 }
             }
             //check if placement violates edge rules
-            
+            //row rules
+            var leftClue = leftClues[row];
+            if ((leftClue == gridSize - 1) && (column != 0 || column != 1))
+            {
+                return false;
+            }
+            var rightClue = rightClues[row];
+            if ((rightClue == gridSize - 1) && (column != gridSize - 1 || column != gridSize - 2))
+            {
+                return false;
+            }
+
+            //column rules
+            var topClue = topClues[column];
+            if ((topClue == gridSize - 1) && (row != 0 || row != 1))
+            {
+                return false;
+            }
+            var bottomClue = bottomClues[column];
+            if ((bottomClue == gridSize - 1) && (row != gridSize - 1 || row != gridSize - 2))
+            {
+                return false;
+            }
+
             return true;
         }
 
