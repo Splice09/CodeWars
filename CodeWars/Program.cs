@@ -43,8 +43,8 @@ namespace CodeWars
             grid = InitializeEdgeClues(grid, topClues, rightClues, bottomClues, leftClues);
             PrintGrid(grid);
 
-            //var isPossible = Possible(grid, 2, 2, 4);
-            //Console.WriteLine($"Is Possible Check for input 2, 2, 4: {isPossible}");
+            var isPossible = Possible(grid, topClues, rightClues, bottomClues, leftClues, 2, 1, 4);
+            Console.WriteLine($"Is Possible Check for input 2, 1, 4: {isPossible}");
             return null;
         }
 
@@ -188,27 +188,61 @@ namespace CodeWars
                     return false;
                 }
             }
-            //check if placement violates edge rules
-            //row rules
+
+            /*=========================================
+            check if placement violates edge clues
+            =========================================*/
             var leftClue = leftClues[row];
-            if ((leftClue == gridSize - 1) && (column != 0 || column != 1))
-            {
-                return false;
-            }
             var rightClue = rightClues[row];
-            if ((rightClue == gridSize - 1) && (column != gridSize - 1 || column != gridSize - 2))
+            var topClue = topClues[column];
+            var bottomClue = bottomClues[column];
+
+            /*===============
+            row rules
+            ===============*/
+            //Any clue of N-1 means you can put the Nth digit in the last or second to last cell
+            if ((leftClue == gridSize - 1) && (height == gridSize) && (column < gridSize - 2))
             {
                 return false;
             }
 
-            //column rules
-            var topClue = topClues[column];
-            if ((topClue == gridSize - 1) && (row != 0 || row != 1))
+            if ((rightClue == gridSize - 1) && (height == gridSize) && (column > 1))
             {
                 return false;
             }
-            var bottomClue = bottomClues[column];
-            if ((bottomClue == gridSize - 1) && (row != gridSize - 1 || row != gridSize - 2))
+
+            //Any clue >2 you can 'X' out N and N-1 in the first cell
+            if ((leftClue > 2) && (height == gridSize || height == gridSize - 1) && (column == 0))
+            {
+                return false;
+            }
+
+            if ((rightClue >2) && (height == gridSize || height == gridSize - 1) && (column == gridSize - 1))
+            {
+                return false;
+            }
+
+            /*===============
+            column rules
+            ===============*/
+            //Any clue of N-1 means you can put the Nth digit in the last or second to last cell
+            if ((topClue == gridSize - 1) && (height == gridSize) && (row < gridSize - 2))
+            {
+                return false;
+            }
+
+            if ((bottomClue == gridSize - 1) && (height == gridSize) && (row > 1))
+            {
+                return false;
+            }
+
+            //Any clue >2 you can 'X' out N and N-1 in the first cell
+            if ((topClue > 2) && (height == gridSize || height == gridSize - 1) && (row == 0 ))
+            {
+                return false;
+            }
+
+            if ((bottomClue > 2) && (height == gridSize || height == gridSize - 1) && (row == gridSize - 1))
             {
                 return false;
             }
@@ -217,20 +251,20 @@ namespace CodeWars
         }
 
         /* Efficiency Enhancement */
-        //public static Building[,] SetPossibleHeights(Building[,] grid)
-        //{
-        //    int gridSize = grid.GetLength(0);
-        //    for (int i = 0; i < gridSize; i++)
-        //    {
-        //        for(int j = 0; j < gridSize; j++)
-        //        {
+            //public static Building[,] SetPossibleHeights(Building[,] grid)
+            //{
+            //    int gridSize = grid.GetLength(0);
+            //    for (int i = 0; i < gridSize; i++)
+            //    {
+            //        for(int j = 0; j < gridSize; j++)
+            //        {
 
-        //        }
-        //    }
-        //    return grid;
-        //}
+            //        }
+            //    }
+            //    return grid;
+            //}
 
-        public static void PrintClues(IEnumerable<int> topClues, IEnumerable<int> rightClues, IEnumerable<int> bottomClues, IEnumerable<int> leftClues)
+            public static void PrintClues(IEnumerable<int> topClues, IEnumerable<int> rightClues, IEnumerable<int> bottomClues, IEnumerable<int> leftClues)
         {
             Console.WriteLine("==================");
             Console.WriteLine("Printing Clues");
