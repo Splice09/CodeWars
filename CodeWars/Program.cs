@@ -233,7 +233,7 @@ namespace CodeWars
         public bool Possible(Building[,] grid, int[] topClues, int[] rightClues, int[] bottomClues, int[] leftClues, int row, int column, int height)
         {
             int gridSize = grid.GetLength(0);
-            //sudoku scanning
+            #region SUDOKU_SCANNING
             for (int i = 0; i < gridSize; i++)
             {
                 if (grid[row, i].height == height)
@@ -248,6 +248,7 @@ namespace CodeWars
                     return false;
                 }
             }
+            #endregion
 
             /*=========================================
             check if placement violates edge clues
@@ -307,64 +308,81 @@ namespace CodeWars
 
             #region CALCULATE VISIBLE
 
-            //grid[row, column].height = height;
+            grid[row, column].height = height;
             //PrintGrid(grid);
-            //iterate top clue
-            //if(topClue > 0)
-            //{
-            //    int[] gridColumn = new int[gridSize];
-            //    for(int i = 0; i < gridSize; i++)
-            //    {
-            //        gridColumn[i] = grid[i, column].height;
-            //    }
-            //    int buildingsVisible = CountBuildingsVisible(gridColumn);
-            //    if(buildingsVisible > topClue)
-            //    {
-            //        return false;
-            //    }
-            //}
-            //if (rightClue > 0)
-            //{
-            //    int[] gridRow = new int[gridSize];
-            //    for (int i = 0; i < gridSize; i++)
-            //    {
-            //        gridRow[i] = grid[row, i].height;
-            //    }
-            //    gridRow = gridRow.Reverse().ToArray();
-            //    int buildingsVisible = CountBuildingsVisible(gridRow);
-            //    if(buildingsVisible > rightClue)
-            //    {
-            //        return false;
-            //    }
-            //}
-            //if (bottomClue > 0)
-            //{
-            //    int[] gridColumn = new int[gridSize];
-            //    for (int i = 0; i < gridSize; i++)
-            //    {
-            //        gridColumn[i] = grid[i, column].height;
-            //    }
-            //    gridColumn = gridColumn.Reverse().ToArray();
-            //    int buildingsVisible = CountBuildingsVisible(gridColumn);
-            //    if (buildingsVisible > bottomClue)
-            //    {
-            //        return false;
-            //    }
-            //}
-            //if(leftClue > 0)
-            //{
-            //    int[] gridRow = new int[gridSize];
-            //    for (int i = 0; i < gridSize; i++)
-            //    {
-            //        gridRow[i] = grid[row, i].height;
-            //    }
-            //    int buildingsVisible = CountBuildingsVisible(gridRow);
-            //    if (buildingsVisible > leftClue)
-            //    {
-            //        return false;
-            //    }
-            //}
-            
+            if (topClue > 0)
+            {
+                int[] gridColumn = new int[gridSize];
+                for (int i = 0; i < gridSize; i++)
+                {
+                    gridColumn[i] = grid[i, column].height;
+                }
+                if (!gridColumn.Contains(0))
+                {
+                    int buildingsVisible = CountBuildingsVisible(gridColumn);
+                    if (buildingsVisible > topClue)
+                    {
+                        grid[row, column].height = 0;
+                        return false;
+                    }
+                }
+            }
+            if (rightClue > 0)
+            {
+                int[] gridRow = new int[gridSize];
+                for (int i = 0; i < gridSize; i++)
+                {
+                    gridRow[i] = grid[row, i].height;
+                }
+                if (!gridRow.Contains(0))
+                {
+                    gridRow = gridRow.Reverse().ToArray();
+                    int buildingsVisible = CountBuildingsVisible(gridRow);
+                    if (buildingsVisible > rightClue)
+                    {
+                        grid[row, column].height = 0;
+                        return false;
+                    }
+                }
+                
+            }
+            if (bottomClue > 0)
+            {
+                int[] gridColumn = new int[gridSize];
+                for (int i = 0; i < gridSize; i++)
+                {
+                    gridColumn[i] = grid[i, column].height;
+                }
+                if (!gridColumn.Contains(0))
+                {
+                    gridColumn = gridColumn.Reverse().ToArray();
+                    int buildingsVisible = CountBuildingsVisible(gridColumn);
+                    if (buildingsVisible > bottomClue)
+                    {
+                        grid[row, column].height = 0;
+                        return false;
+                    }
+                }
+                
+            }
+            if (leftClue > 0)
+            {
+                int[] gridRow = new int[gridSize];
+                for (int i = 0; i < gridSize; i++)
+                {
+                    gridRow[i] = grid[row, i].height;
+                }
+                if (!gridRow.Contains(0))
+                {
+                    int buildingsVisible = CountBuildingsVisible(gridRow);
+                    if (buildingsVisible > leftClue)
+                    {
+                        grid[row, column].height = 0;
+                        return false;
+                    }
+                }
+            }
+
 
             #endregion
 
