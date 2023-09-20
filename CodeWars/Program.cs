@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace CodeWars
 {
@@ -19,15 +20,31 @@ namespace CodeWars
                                 0, 3, 0, 0,
                                 0, 1, 0, 0};
 
-            Skyscrapers.SolvePuzzle(clues1);
+            var clues3 = new[]{ 3, 2, 2, 3, 2, 1,
+                                1, 2, 3, 3, 2, 2,
+                                5, 1, 2, 2, 4, 3,
+                                3, 2, 1, 2, 2, 4};
+
+            var clues4 = new[] { 7, 0, 0, 0, 2, 2, 3,
+                                 0, 0, 3, 0, 0, 0, 0,
+                                 3, 0, 3, 0, 0, 5, 0,
+                                 0, 0, 0, 0, 5, 0, 4 };
+
+            var skyscrapers = new Skyscrapers();
+            skyscrapers.SolvePuzzle(clues1);
+            
+            //int[] buildingArray = { 7, 0, 8, 2, 9 };
+
+            //Console.Write(skyscrapers.CountBuildingsVisible(buildingArray));
         }
     }
 
     public class Skyscrapers
     {
-        public static int[][] SolvePuzzle(int[] clues)
+        public List<Building[,]> answers = new List<Building[,]>();
+        public int[][] SolvePuzzle(int[] clues)
         {
-            int gridSize = (int)Math.Sqrt(clues.Length);
+            int gridSize = clues.Length / 4;
 
             // separate clues
             var topClues = clues.Take(gridSize).ToArray();
@@ -43,12 +60,22 @@ namespace CodeWars
             grid = InitializeEdgeClues(grid, topClues, rightClues, bottomClues, leftClues);
             PrintGrid(grid);
 
-            var isPossible = Possible(grid, topClues, rightClues, bottomClues, leftClues, 2, 1, 4);
-            Console.WriteLine($"Is Possible Check for input 2, 1, 4: {isPossible}");
+            //var isPossible = Possible(grid, topClues, rightClues, bottomClues, leftClues, 2, 1, 4);
+            //Console.WriteLine($"Is Possible Check for input 2, 1, 4: {isPossible}");
+
+            Solve(grid, topClues, rightClues, bottomClues, leftClues);
+
+            Console.WriteLine("In SolvePuzzle()");
+            //foreach (var answer in answers)
+            //{
+            //    PrintGrid(answer);
+            //}
+            //grid = Solve(grid, topClues, rightClues, bottomClues, leftClues);
+            //PrintGrid(grid);
             return null;
         }
 
-        public static Building[,] CreateGrid(int gridSize)
+        public Building[,] CreateGrid(int gridSize)
         {
 
             Building[,] grid = new Building[gridSize, gridSize];
@@ -73,7 +100,7 @@ namespace CodeWars
             return grid;
         }
 
-        private static Building[,] InitializeEdgeClues(Building[,] grid, int[] topClues, int[] rightClues, int[] bottomClues, int[] leftClues)
+        private Building[,] InitializeEdgeClues(Building[,] grid, int[] topClues, int[] rightClues, int[] bottomClues, int[] leftClues)
         {
             int gridSize = topClues.Length;
             for (int i = 0; i < gridSize; i++)
@@ -170,7 +197,40 @@ namespace CodeWars
             return grid;
         }
 
-        public static bool Possible(Building[,] grid, int[] topClues, int[] rightClues, int[] bottomClues, int[] leftClues, int row, int column, int height)
+        public void Solve(Building[,] grid, int[] topClues, int[] rightClues, int[] bottomClues, int[] leftClues)
+        {
+            int gridSize = grid.GetLength(0);
+            for (int i = 0; i < gridSize; i++)
+            {
+                for (int j = 0; j < gridSize; j++)
+                {
+                    if (grid[i, j].height == 0)
+                    {
+                        for (int n = 1; n <= gridSize; n++)
+                        {
+                            if (Possible(grid, topClues, rightClues, bottomClues, leftClues, i, j, n))
+                            {
+                                grid[i, j].height = n;
+                                Solve(grid, topClues, rightClues, bottomClues, leftClues);
+                                //backtracking
+                                grid[i, j].height = 0;
+                            }
+                        }
+                        return;
+                    }
+                }
+            }
+            Console.WriteLine("In recursive function");
+            PrintGrid(grid);
+
+            //Building[,] solvedGrid = new Building[gridSize, gridSize];
+            //solvedGrid =  grid.Clone() as Building[,];
+            //this.answers.Add(grid);
+            
+            //return grid;
+        }
+
+        public bool Possible(Building[,] grid, int[] topClues, int[] rightClues, int[] bottomClues, int[] leftClues, int row, int column, int height)
         {
             int gridSize = grid.GetLength(0);
             //sudoku scanning
@@ -197,9 +257,7 @@ namespace CodeWars
             var topClue = topClues[column];
             var bottomClue = bottomClues[column];
 
-            /*===============
-            row rules
-            ===============*/
+            #region ROW_RULES
             //Any clue of N-1 means you can put the Nth digit in the last or second to last cell
             if ((leftClue == gridSize - 1) && (height == gridSize) && (column < gridSize - 2))
             {
@@ -217,14 +275,13 @@ namespace CodeWars
                 return false;
             }
 
-            if ((rightClue >2) && (height == gridSize || height == gridSize - 1) && (column == gridSize - 1))
+            if ((rightClue > 2) && (height == gridSize || height == gridSize - 1) && (column == gridSize - 1))
             {
                 return false;
             }
-
-            /*===============
-            column rules
-            ===============*/
+            #endregion
+            
+            #region COLUMN_RULES
             //Any clue of N-1 means you can put the Nth digit in the last or second to last cell
             if ((topClue == gridSize - 1) && (height == gridSize) && (row < gridSize - 2))
             {
@@ -237,7 +294,7 @@ namespace CodeWars
             }
 
             //Any clue >2 you can 'X' out N and N-1 in the first cell
-            if ((topClue > 2) && (height == gridSize || height == gridSize - 1) && (row == 0 ))
+            if ((topClue > 2) && (height == gridSize || height == gridSize - 1) && (row == 0))
             {
                 return false;
             }
@@ -246,25 +303,106 @@ namespace CodeWars
             {
                 return false;
             }
+            #endregion
+
+            #region CALCULATE VISIBLE
+
+            //grid[row, column].height = height;
+            //PrintGrid(grid);
+            //iterate top clue
+            //if(topClue > 0)
+            //{
+            //    int[] gridColumn = new int[gridSize];
+            //    for(int i = 0; i < gridSize; i++)
+            //    {
+            //        gridColumn[i] = grid[i, column].height;
+            //    }
+            //    int buildingsVisible = CountBuildingsVisible(gridColumn);
+            //    if(buildingsVisible > topClue)
+            //    {
+            //        return false;
+            //    }
+            //}
+            //if (rightClue > 0)
+            //{
+            //    int[] gridRow = new int[gridSize];
+            //    for (int i = 0; i < gridSize; i++)
+            //    {
+            //        gridRow[i] = grid[row, i].height;
+            //    }
+            //    gridRow = gridRow.Reverse().ToArray();
+            //    int buildingsVisible = CountBuildingsVisible(gridRow);
+            //    if(buildingsVisible > rightClue)
+            //    {
+            //        return false;
+            //    }
+            //}
+            //if (bottomClue > 0)
+            //{
+            //    int[] gridColumn = new int[gridSize];
+            //    for (int i = 0; i < gridSize; i++)
+            //    {
+            //        gridColumn[i] = grid[i, column].height;
+            //    }
+            //    gridColumn = gridColumn.Reverse().ToArray();
+            //    int buildingsVisible = CountBuildingsVisible(gridColumn);
+            //    if (buildingsVisible > bottomClue)
+            //    {
+            //        return false;
+            //    }
+            //}
+            //if(leftClue > 0)
+            //{
+            //    int[] gridRow = new int[gridSize];
+            //    for (int i = 0; i < gridSize; i++)
+            //    {
+            //        gridRow[i] = grid[row, i].height;
+            //    }
+            //    int buildingsVisible = CountBuildingsVisible(gridRow);
+            //    if (buildingsVisible > leftClue)
+            //    {
+            //        return false;
+            //    }
+            //}
+            
+
+            #endregion
 
             return true;
         }
 
+        public int CountBuildingsVisible(int[] buildingArray)
+        {
+            int buildingCount = 0;
+            int currentMaximum = buildingArray[0];
+
+            for (int i = 0; i < buildingArray.Length; i++)
+            {
+                if (buildingArray[i] != 0 && (buildingArray[i] > currentMaximum || buildingArray[i] == currentMaximum))
+                {
+                    buildingCount++;
+                    currentMaximum = buildingArray[i];
+                }
+            }
+
+            return buildingCount;
+        }
+
         /* Efficiency Enhancement */
-            //public static Building[,] SetPossibleHeights(Building[,] grid)
-            //{
-            //    int gridSize = grid.GetLength(0);
-            //    for (int i = 0; i < gridSize; i++)
-            //    {
-            //        for(int j = 0; j < gridSize; j++)
-            //        {
+        //public static Building[,] SetPossibleHeights(Building[,] grid)
+        //{
+        //    int gridSize = grid.GetLength(0);
+        //    for (int i = 0; i < gridSize; i++)
+        //    {
+        //        for(int j = 0; j < gridSize; j++)
+        //        {
 
-            //        }
-            //    }
-            //    return grid;
-            //}
+        //        }
+        //    }
+        //    return grid;
+        //}
 
-            public static void PrintClues(IEnumerable<int> topClues, IEnumerable<int> rightClues, IEnumerable<int> bottomClues, IEnumerable<int> leftClues)
+        public void PrintClues(IEnumerable<int> topClues, IEnumerable<int> rightClues, IEnumerable<int> bottomClues, IEnumerable<int> leftClues)
         {
             Console.WriteLine("==================");
             Console.WriteLine("Printing Clues");
@@ -290,7 +428,7 @@ namespace CodeWars
             }
             Console.WriteLine("");
         }
-        public static void PrintGrid(Building[,] grid)
+        public void PrintGrid(Building[,] grid)
         {
             Console.WriteLine("==================");
             Console.WriteLine("Printing Grid");
