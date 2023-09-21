@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\Splice\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\Splice\\.nuget\\packages"
+    ]
+  }
+}

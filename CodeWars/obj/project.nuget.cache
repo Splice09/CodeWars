@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7CsJ94BdnCjIbHWcb6ORK4dz3Y23Yl8LGvGRWQqmDiiCdu3OaJfXJcLOnKKMpK61+X+lye5IRSc4j1/lrYbD2A==",
+  "dgSpecHash": "1YCpvVWbmPLPFyZRIGTvbmxgiN/gG9lp8Bll2UL8GWq29UESf9hAUUgIBxTu2FZ/0iEyLV7LRzdQdP9pG3yqjg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Patrick\\workspace\\Codewars\\CodeWars\\CodeWars\\CodeWars.csproj",
+  "projectFilePath": "C:\\workspace\\CodeWars\\CodeWars\\CodeWars.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

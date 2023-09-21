@@ -1,0 +1,13 @@
+C:\workspace\CodeWars\CodeWars\bin\Debug\netcoreapp3.1\CodeWars.exe
+C:\workspace\CodeWars\CodeWars\bin\Debug\netcoreapp3.1\CodeWars.deps.json
+C:\workspace\CodeWars\CodeWars\bin\Debug\netcoreapp3.1\CodeWars.runtimeconfig.json
+C:\workspace\CodeWars\CodeWars\bin\Debug\netcoreapp3.1\CodeWars.runtimeconfig.dev.json
+C:\workspace\CodeWars\CodeWars\bin\Debug\netcoreapp3.1\CodeWars.dll
+C:\workspace\CodeWars\CodeWars\bin\Debug\netcoreapp3.1\CodeWars.pdb
+C:\workspace\CodeWars\CodeWars\obj\Debug\netcoreapp3.1\CodeWars.GeneratedMSBuildEditorConfig.editorconfig
+C:\workspace\CodeWars\CodeWars\obj\Debug\netcoreapp3.1\CodeWars.AssemblyInfoInputs.cache
+C:\workspace\CodeWars\CodeWars\obj\Debug\netcoreapp3.1\CodeWars.AssemblyInfo.cs
+C:\workspace\CodeWars\CodeWars\obj\Debug\netcoreapp3.1\CodeWars.csproj.CoreCompileInputs.cache
+C:\workspace\CodeWars\CodeWars\obj\Debug\netcoreapp3.1\CodeWars.dll
+C:\workspace\CodeWars\CodeWars\obj\Debug\netcoreapp3.1\CodeWars.pdb
+C:\workspace\CodeWars\CodeWars\obj\Debug\netcoreapp3.1\CodeWars.genruntimeconfig.cache
