@@ -31,7 +31,7 @@ namespace CodeWars
                                  0, 0, 0, 0, 5, 0, 4 };
 
             var skyscrapers = new Skyscrapers();
-            skyscrapers.SolvePuzzle(clues1);
+            skyscrapers.SolvePuzzle(clues3);
             
             //int[] buildingArray = { 7, 0, 8, 2, 9 };
 
@@ -65,7 +65,6 @@ namespace CodeWars
 
             Solve(grid, topClues, rightClues, bottomClues, leftClues);
 
-            Console.WriteLine("In SolvePuzzle()");
             //foreach (var answer in answers)
             //{
             //    PrintGrid(answer);
@@ -382,7 +381,6 @@ namespace CodeWars
                     }
                 }
             }
-
 
             #endregion
 
